@@ -31,9 +31,12 @@ def get_string(m):
     user_input = input(m)
     return user_input
 
-def get_key(m,l,u):
-    key = get_integer(m,l,u)
+
+def get_key(m, l, u):
+    key = get_integer(m, l, u)
     return str(key)
+
+
 def get_option(m):
     get_letter = True
     while get_letter is True:
@@ -77,7 +80,11 @@ def add_item_to_order():
         order_list.append({"item": item, "quantity": quantity, "total_price": total_price})
         print(f"{quantity} {item}(s) added to your order.")
     else:
-        print("Error, should have a correct key for the sandwich")
+        print("Error, should have a correct key for the sandwich ")
+
+
+def delet_order():
+    reveiw_sandwich()
 
 
 def main():
@@ -105,7 +112,7 @@ def main():
         elif user_choice == "Q":
             run_program = False
         else:
-            print("Unrecognised entry")
+            print("Unrecognised entry, please enter a presented letter")
     print("Thank you, the program has ended")
 
 
