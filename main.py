@@ -1,18 +1,3 @@
-sandwich_list = {
-    "1": {"quantity": "-", "name": "Turkey and Brie sandwich", "price": 15.99},
-    "2": {"quantity": "-", "name": "Thai beef sandwich", "price": 16.95},
-    "3": {"quantity": "-", "name": "Garlic Aioli BLT sandwich", "price": 14.99},
-    "4": {"quantity": "-", "name": "Italian Beef sandwich", "price": 16.95},
-    "5": {"quantity": "-", "name": "Philadelphia Roast Pork sandwich", "price": 16.99},
-    "6": {"quantity": "-", "name": "Mediterranean veggie and haloumi sandwich", "price": 16.50},
-    "7": {"quantity": "-", "name": "Chicken, pear, spinach and celery sandwich", "price": 14.95},
-    "8": {"quantity": "-", "name": "Chicken, brie and cranberry sandwich", "price": 15.99},
-    "9": {"quantity": "-", "name": "Tuna melt with green goddess peas sandwich", "price": 14.95}
-}
-
-order_list = []
-
-
 def get_integer(m, lower, upper):
     getting_integer = True
     while getting_integer is True:
@@ -83,8 +68,10 @@ def add_item_to_order():
         print("Error, should have a correct key for the sandwich ")
 
 
-def delet_order():
-    reveiw_sandwich()
+def start_new_order():
+    global order_list
+    order_list = []
+    print('Previous order deleted and new order started.')
 
 
 def main():
@@ -92,6 +79,7 @@ def main():
         ["P", "Print menu"],
         ["R", "Review order"],
         ["A", "Add Item to order"],
+        ["S", "Delet order and start anew order"],
         ["Q", "Quit"]
     ]
 
@@ -109,6 +97,8 @@ def main():
             reveiw_order()
         elif user_choice == "A":
             add_item_to_order()
+        elif user_choice == "S":
+            start_new_order()
         elif user_choice == "Q":
             run_program = False
         else:
@@ -117,4 +107,17 @@ def main():
 
 
 if __name__ == "__main__":
+    sandwich_list = {
+        "1": {"quantity": "-", "name": "Turkey and Brie sandwich", "price": 15.99},
+        "2": {"quantity": "-", "name": "Thai beef sandwich", "price": 16.95},
+        "3": {"quantity": "-", "name": "Garlic Aioli BLT sandwich", "price": 14.99},
+        "4": {"quantity": "-", "name": "Italian Beef sandwich", "price": 16.95},
+        "5": {"quantity": "-", "name": "Philadelphia Roast Pork sandwich", "price": 16.99},
+        "6": {"quantity": "-", "name": "Mediterranean veggie and haloumi sandwich", "price": 16.50},
+        "7": {"quantity": "-", "name": "Chicken, pear, spinach and celery sandwich", "price": 14.95},
+        "8": {"quantity": "-", "name": "Chicken, brie and cranberry sandwich", "price": 15.99},
+        "9": {"quantity": "-", "name": "Tuna melt with green goddess peas sandwich", "price": 14.95}
+    }
+
+    order_list = []
     main()
