@@ -74,12 +74,38 @@ def start_new_order():
     print('Previous order deleted and new order started.')
 
 
+def edit_order():
+    if not order_list:
+        print("Your order is empty.")
+        return
+
+    reveiw_order()
+    item_name = get_key("Enter the number of the item you want to edit or delete: ", 1, 9)
+
+    for item in order_list:
+        if item["name"] == item_name:
+            edit_choice = input("Do you want to (E)dit the quantity or (D)elete the item? ").lower()
+            if edit_choice == "e":
+                new_quantity = int(input("Enter the new quantity: "))
+                item["quantity"] = new_quantity
+                print(f"Quantity of {item['name']} updated to {new_quantity}.")
+            elif edit_choice == "d":
+                order_list.remove(item)
+                print(f"{item['name']} removed from your order.")
+            else:
+                print("Invalid choice.")
+            return
+
+    print(f"{item_name} not found in your order. Please try again.")
+
+
 def main():
     menu_list = [
         ["P", "Print menu"],
         ["R", "Review order"],
         ["A", "Add Item to order"],
         ["S", "Delet order and start anew order"],
+        ["E", "Edit order"],
         ["Q", "Quit"]
     ]
 
@@ -99,6 +125,8 @@ def main():
             add_item_to_order()
         elif user_choice == "S":
             start_new_order()
+        elif user_choice == "E":
+            edit_order()
         elif user_choice == "Q":
             run_program = False
         else:
