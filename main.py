@@ -47,9 +47,17 @@ def reveiw_order():
         print("Your order:")
         total_amount = 0
         for item in order_list:
-            print(f"{item['quantity']} {item['item']} - ${item['total_price']}")
-            total_amount += item['total_price']
-        print(f"Total: ${total_amount:.2f}")
+            for i in range(0, len(order_list)):
+                print(f"#{item['quantity']} {item['item']} - ${item['total_price']}")
+                total_amount += item['total_price']
+            print(f"Total: ${total_amount:.2f}")
+
+
+def get_index():
+    print("Your order")
+    for item in order_list:
+        for i in range(0, len(order_list)):
+            print(f"{i}: #{item['quantity']} {item['item']}")
 
 
 def add_item_to_order():
@@ -75,28 +83,22 @@ def start_new_order():
 
 
 def edit_order():
-    if not order_list:
+    if len(order_list) == 0:
         print("Your order is empty.")
         return
 
-    reveiw_order()
-    item_name = get_key("Enter the number of the item you want to edit or delete: ", 1, 9)
+    get_index()
+    choice = get_option("Would you like to (E)dit the quantity, (D)elete an item, or (C)ancel this function: ")
 
-    for item in order_list:
-        if item["name"] == item_name:
-            edit_choice = input("Do you want to (E)dit the quantity or (D)elete the item? ").lower()
-            if edit_choice == "e":
-                new_quantity = int(input("Enter the new quantity: "))
-                item["quantity"] = new_quantity
-                print(f"Quantity of {item['name']} updated to {new_quantity}.")
-            elif edit_choice == "d":
-                order_list.remove(item)
-                print(f"{item['name']} removed from your order.")
-            else:
-                print("Invalid choice.")
-            return
-
-    print(f"{item_name} not found in your order. Please try again.")
+    if choice == "E":
+        choice_num = get_integer("Enter the index number you would like to edit: ", 0, len(order_list) - 1)
+        print(choice_num)
+    elif choice == "D":
+        print("Loading")
+    elif choice == "C":
+        print("Function canceled, returning to main menu")
+    else:
+        print("Unrecognised entry, please try again")
 
 
 def main():
