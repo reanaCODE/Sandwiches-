@@ -47,10 +47,9 @@ def reveiw_order():
         print("Your order:")
         total_amount = 0
         for item in order_list:
-            for i in range(0, len(order_list)):
-                print(f"#{item['quantity']} {item['item']} - ${item['total_price']}")
-                total_amount += item['total_price']
-            print(f"Total: ${total_amount:.2f}")
+            print(f"#{item['quantity']} {item['item']} - ${item['total_price']}")
+            total_amount += item['total_price']
+        print(f"Total: ${total_amount:.2f}")
 
 
 def get_index():
@@ -63,17 +62,18 @@ def get_index():
 def add_item_to_order():
     reveiw_sandwich(sandwich_list)
     print("-" * 100)
-    choice = get_key("Enter the item number to add to your order (1-9): ", 1, 9)
+    choice = get_key("Enter the item number to add to your order (1-9), enter 0 to cancel: ", 0, 9)
     if choice in sandwich_list:
         item = sandwich_list[choice]
-        quantity = int(input("Enter the quantity you want to order: "))
+        quantity = get_integer("Enter the quantity you want to order: ", 0, 20)
         item = sandwich_list[choice]['name']
         price = sandwich_list[choice]['price']
         total_price = price * quantity
         order_list.append({"item": item, "quantity": quantity, "total_price": total_price})
         print(f"{quantity} {item}(s) added to your order.")
     else:
-        print("Error, should have a correct key for the sandwich ")
+        print("ERROR/canceled function... Returning to main menu")
+        return None
 
 
 def start_new_order():
@@ -85,20 +85,26 @@ def start_new_order():
 def edit_order():
     if len(order_list) == 0:
         print("Your order is empty.")
-        return
+        return None
 
     get_index()
     choice = get_option("Would you like to (E)dit the quantity, (D)elete an item, or (C)ancel this function: ")
-
+    if choice == "C":
+        print("Returning to main menu/Canceling this function")
+        return None
+    choice_num = get_integer("Enter the index number you would like to edit/delete: ", 0, len(order_list) - 1)
     if choice == "E":
-        choice_num = get_integer("Enter the index number you would like to edit: ", 0, len(order_list) - 1)
-        print(choice_num)
+        for item in order_list:
+            print(f"You have # {item['quantity']} of {item['item']}")
+            new_value = get_integer("What would you like to change the quantity to: ", 0, 20)
+            order_list[choice_num]['quantity'] = new_value
+            print("Order Successfully updated")
     elif choice == "D":
-        print("Loading")
-    elif choice == "C":
-        print("Function canceled, returning to main menu")
+        print("Order updated")
+        order_list.pop(choice_num)
     else:
         print("Unrecognised entry, please try again")
+        return None
 
 
 def main():
