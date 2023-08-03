@@ -54,8 +54,8 @@ def reveiw_order():
 
 def get_index():
     print("Your order")
-    for item in order_list:
-        for i in range(0, len(order_list)):
+    for i in range(0, len(order_list)):
+        for item in order_list:
             print(f"{i}: #{item['quantity']} {item['item']}")
 
 
@@ -107,6 +107,51 @@ def edit_order():
         return None
 
 
+def get_phone_number(m):
+    user_input = input(m)
+    return user_input
+
+
+def get_details():
+    print("Get customer details")
+    users_option = get_option("(P)ickup or (D)ilivery? ")
+    if users_option == "D":
+        print("Get full information")
+        user_name = get_string("Please enter customer name: ")
+        address_1 = get_string("Please enter address line 1: ")
+        address_2 = get_string("Please enter address line 2: ")
+        user_number = get_phone_number("Please enter phone number (NZ/international mobile/land-line): ")
+        print("The phone number you have entered is {}".format(user_number))
+        # how to print the phone number like --- --- ----- above
+        confirm_number = get_option("Please confirm Y/N: -> ")
+        if confirm_number == "Y":
+            print("Phone Number accepted")
+            print("The current customer details are as loaded: ")
+            print("Name      : {}".format(user_name))
+            print("Address_1 : {}".format(address_1))
+            print("Address_2 : {}".format(address_2))
+            print("Phone     : {}".format(user_number))
+            print("-" * 100)
+            confirm_details = get_option("Would you like to confirm your information Y/N: -> ")
+            if confirm_details == "Y":
+                print("-" * 100)
+                print("Order details updated")
+            elif confirm_details == "N":
+                print("Returning to main menu")
+                return None
+            else:
+                print("ERROR - returning to main menu")
+        elif confirm_number == "N":
+            print("Phone Number not confirmed - returning to main menu")
+    elif users_option == "P":
+        print("Get full information")
+        user_name = get_string("Please enter your name: ")
+        user_number = get_string("Please enter your phone number ")
+        confirm_info = get_option("Enter 'E' if your details: {}, {}, are correct: ".format(user_name, user_number))
+    else:
+        print("ERROR - returning to main menu")
+
+
 def main():
     menu_list = [
         ["P", "Print menu"],
@@ -114,6 +159,7 @@ def main():
         ["A", "Add Item to order"],
         ["S", "Delet order and start anew order"],
         ["E", "Edit order"],
+        ["G", "Get details"],
         ["Q", "Quit"]
     ]
 
@@ -135,6 +181,8 @@ def main():
             start_new_order()
         elif user_choice == "E":
             edit_order()
+        elif user_choice == "G":
+            get_details()
         elif user_choice == "Q":
             run_program = False
         else:
