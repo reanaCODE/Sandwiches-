@@ -54,7 +54,7 @@ def reveiw_order():
 
 def get_index():
     print("Your order")
-    for i in range(0, len(order_list)):
+    for i in range(len(order_list)):
         for item in order_list:
             print(f"{i}: #{item['quantity']} {item['item']}")
 
@@ -89,6 +89,7 @@ def edit_order():
 
     get_index()
     choice = get_option("Would you like to (E)dit the quantity, (D)elete an item, or (C)ancel this function: ")
+
     if choice == "C":
         print("Returning to main menu/Canceling this function")
         return None
@@ -107,49 +108,68 @@ def edit_order():
         return None
 
 
+import re
+
+
 def get_phone_number(m):
-    user_input = input(m)
-    return user_input
+    while True:
+        phone_number = input("Please enter your phone number (xxx-xxx-xxxx): (+64) ")
+        if validate_phone_number(phone_number):
+            return phone_number
+        else:
+            print("Invalid phone number. Please enter a valid phone number.")
 
 
-def get_details():
-    print("Get customer details")
+def validate_phone_number(phone_number):
+    # Define a simple pattern for a valid phone number (e.g., xxx-xxx-xxxx)
+    pattern = re.compile(r'^\d{3}-\d{3}-\d{4}$')
+    return pattern.match(phone_number)
+
+
+def get_details(ll):
+    # have to get it so that if they press g again after entering details it prints what has already been done and if
+    # they want to edit it also the phone number validation and the printing of the details after getting them
+    # loop and deleting and checking everything
+    # more validation
+    print("Getting customer details")
+    print(customer_details)
+
     users_option = get_option("(P)ickup or (D)ilivery? ")
+    customer_details['Delivery Type'] = users_option
+
+    user_name = get_string("Please enter customer name: ")
+    customer_details['Name'] = user_name
+
+    user_number = get_phone_number("")
+    customer_details['Phone Number'] = user_number
+
     if users_option == "D":
-        print("Get full information")
-        user_name = get_string("Please enter customer name: ")
+        print("Getting delivery information")
         address_1 = get_string("Please enter address line 1: ")
+        customer_details['Address Line One'] = address_1
         address_2 = get_string("Please enter address line 2: ")
-        user_number = get_phone_number("Please enter phone number (NZ/international mobile/land-line): ")
-        print("The phone number you have entered is {}".format(user_number))
-        # how to print the phone number like --- --- ----- above
-        confirm_number = get_option("Please confirm Y/N: -> ")
-        if confirm_number == "Y":
-            print("Phone Number accepted")
-            print("The current customer details are as loaded: ")
-            print("Name      : {}".format(user_name))
-            print("Address_1 : {}".format(address_1))
-            print("Address_2 : {}".format(address_2))
-            print("Phone     : {}".format(user_number))
-            print("-" * 100)
-            confirm_details = get_option("Would you like to confirm your information Y/N: -> ")
-            if confirm_details == "Y":
-                print("-" * 100)
-                print("Order details updated")
-            elif confirm_details == "N":
-                print("Returning to main menu")
-                return None
-            else:
-                print("ERROR - returning to main menu")
-        elif confirm_number == "N":
-            print("Phone Number not confirmed - returning to main menu")
+        customer_details['Address Line Two'] = address_2
+        print("Delivery order")
     elif users_option == "P":
-        print("Get full information")
-        user_name = get_string("Please enter your name: ")
-        user_number = get_string("Please enter your phone number ")
-        confirm_info = get_option("Enter 'E' if your details: {}, {}, are correct: ".format(user_name, user_number))
+        print("Pickup order")
     else:
         print("ERROR - returning to main menu")
+
+    print(customer_details)
+    correct_info = get_option("If these details are correct enter C and if they are incorrect please enter I: ")
+    if correct_info == 'C':
+        print("Info saved")
+        print(customer_details)
+    elif correct_info == 'I':
+        print("Deleting all info please enter details again")
+        customer_details['Delivery Type'] = ""
+        customer_details['Name'] = ""
+        customer_details['Phone Number'] = "'"
+        customer_details['Address Line One'] = ""
+        customer_details['Address Line Two'] = ""
+        print(customer_details)
+    else:
+        print("ERROR")
 
 
 def main():
@@ -182,7 +202,7 @@ def main():
         elif user_choice == "E":
             edit_order()
         elif user_choice == "G":
-            get_details()
+            get_details(customer_details)
         elif user_choice == "Q":
             run_program = False
         else:
@@ -204,4 +224,13 @@ if __name__ == "__main__":
     }
 
     order_list = []
+
+    customer_details = {
+        "Delivery Type": "",
+        "Name": "",
+        "Phone Number": "",
+        "Address Line One": "",
+        "Address Line Two": ""
+    }
+
     main()
