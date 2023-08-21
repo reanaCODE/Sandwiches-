@@ -128,7 +128,7 @@ def validate_phone_number(phone_number):
 
 def get_details(ll):
     # have to get it so that if they press g again after entering details it prints what has already been done and if
-    # they want to edit it also the phone number validation and the printing of the details after getting them
+    # they want to edit it also printing of the details after getting them
     # loop and deleting and checking everything
     # more validation
     print("Getting customer details")
@@ -172,6 +172,32 @@ def get_details(ll):
         print("ERROR")
 
 
+def confirm_order():
+    print(customer_details)
+    print(order_list)
+    confirm = get_option("If this information is correct please enter C and if they are incorrect please enter I: --> ")
+    if confirm == "C":
+        print("Details confirmed")
+        print("gConfirmation for order needed. After confirmation cancellation is not an option")
+        order_confirm = get_option("Please enter C to confirm or Q to go back to main menu: --> ")
+        if order_confirm == "C":
+            print("Confirmation accepted - you will be notified when the order is ready/on the way!")
+            print("Thank you and enjoy your Sandwich(s)!!")
+            return order_confirm
+        elif order_confirm == "Q":
+            print("Returning to main menu")
+            return None
+        else:
+            print("ERROR - returning to main menu")
+            return None
+    elif confirm == "I":
+        print("Details incorrect - returning to main menu")
+        return None
+    else:
+        print("ERROR - returning to main menu")
+        return None
+
+
 def main():
     menu_list = [
         ["P", "Print menu"],
@@ -180,6 +206,7 @@ def main():
         ["S", "Delet order and start anew order"],
         ["E", "Edit order"],
         ["G", "Get details"],
+        ["C", "Confirm Order and details"],
         ["Q", "Quit"]
     ]
 
@@ -203,6 +230,8 @@ def main():
             edit_order()
         elif user_choice == "G":
             get_details(customer_details)
+        elif user_choice == "C":
+            confirm_order()
         elif user_choice == "Q":
             run_program = False
         else:
