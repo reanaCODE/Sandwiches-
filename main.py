@@ -183,6 +183,7 @@ def confirm_order():
         if order_confirm == "C":
             print("Confirmation accepted - you will be notified when the order is ready/on the way!")
             print("Thank you and enjoy your Sandwich(s)!!")
+            # need to stop program here
             return order_confirm
         elif order_confirm == "Q":
             print("Returning to main menu")
@@ -232,6 +233,7 @@ def main():
             get_details(customer_details)
         elif user_choice == "C":
             confirm_order()
+            # how to stop program
         elif user_choice == "Q":
             run_program = False
         else:
