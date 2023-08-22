@@ -1,13 +1,16 @@
 def get_integer(m, lower, upper):
+    # getting a number from the user - validation
     getting_integer = True
     while getting_integer is True:
         try:
             user_input = int(input(m))
         except ValueError:
             print("Please enter an integer")
+            # if they enter anything but a number
             continue
         if user_input > upper or user_input < lower:
             print("Please enter a valid value")
+            # if they enter too many or not enough/not valid enough number/s
         else:
             return user_input
 
@@ -19,35 +22,45 @@ def get_string(m):
 
 def get_key(m, l, u):
     key = get_integer(m, l, u)
+    # had to add this because there was an error with getting an integer validation
     return str(key)
 
 
 def get_option(m):
+    # validation for when user has to enter one letter
     get_letter = True
     while get_letter is True:
         user_input = input(m).upper().strip()
+        # changes all letters to uppercase and takes away the spaces (strip)
         if len(user_input) != 1:
             print("One character needed")
+            # if the user enters multiple characters
         elif user_input.isdigit():
             print("I need a letter please try again")
+            # if they enter a number
         else:
             return user_input
 
 
 def reveiw_sandwich(l):
+    # prints the sandwich list to user
     print("Menu:")
     for key, item in sandwich_list.items():
         print(f"{key}: {item['name']}: ${item['price']}")
 
 
 def reveiw_order():
+    # prints the order list to user to see what they have in their order
     if len(order_list) == 0:
+        # if they have added nothing to their order
         print("Your order is empty.")
     else:
         print("Your order:")
         total_amount = 0
         for item in order_list:
             print(f"#{item['quantity']} {item['item']} - ${item['total_price']}")
+            # prints the quality and the item of what they have chosen and the price of that
+            # then it calculates the total price and prints it ot the user
             total_amount += item['total_price']
         print(f"Total: ${total_amount:.2f}")
 
@@ -56,27 +69,33 @@ def get_index():
     print("Your order")
     for i in range(len(order_list)):
         for item in order_list:
+            # prints the users order list with indexes for the editing order function
             print(f"{i}: #{item['quantity']} {item['item']}")
 
 
 def add_item_to_order():
     reveiw_sandwich(sandwich_list)
+    # function of adding a sandwich to order list and prints out the sandwich menu to choose from
     print("-" * 100)
     choice = get_key("Enter the item number to add to your order (1-9), enter 0 to cancel: ", 0, 9)
     if choice in sandwich_list:
         item = sandwich_list[choice]
         quantity = get_integer("Enter the quantity you want to order: ", 0, 20)
+        # ask for the quantity of the item the user wants to order
         item = sandwich_list[choice]['name']
         price = sandwich_list[choice]['price']
         total_price = price * quantity
+        # adding it to the order list (reveiw order) with the quality and the total price
         order_list.append({"item": item, "quantity": quantity, "total_price": total_price})
         print(f"{quantity} {item}(s) added to your order.")
     else:
         print("ERROR/canceled function... Returning to main menu")
+        # incase an error occurs
         return None
 
 
 def start_new_order():
+    # funtion to delete and start a new order
     global order_list
     order_list = []
     print('Previous order deleted and new order started.')
@@ -87,14 +106,18 @@ def edit_order():
         print("Your order is empty.")
         return None
 
+    # function to edit the order )either deleting an item or changing the quantity
+
     get_index()
     choice = get_option("Would you like to (E)dit the quantity, (D)elete an item, or (C)ancel this function: ")
+    # adding the C to cancel this function incase the user made a mistake
 
     if choice == "C":
         print("Returning to main menu/Canceling this function")
         return None
     choice_num = get_integer("Enter the index number you would like to edit/delete: ", 0, len(order_list) - 1)
     if choice == "E":
+        # editing the quantity of an item of the order
         for item in order_list:
             print(f"You have # {item['quantity']} of {item['item']}")
             new_value = get_integer("What would you like to change the quantity to: ", 0, 20)
@@ -102,6 +125,7 @@ def edit_order():
             print("Order Successfully updated")
     elif choice == "D":
         print("Order updated")
+        # deleting an item in order list
         order_list.pop(choice_num)
     else:
         print("Unrecognised entry, please try again")
@@ -111,9 +135,13 @@ def edit_order():
 import re
 
 
+# for the phone number validation
+
 def get_phone_number(m):
+    # Getting the phone number in customer details
     while True:
         phone_number = input("Please enter your phone number (xxx-xxx-xxxx): (+64) ")
+        # put xxx-xxx-xxxx to show user the way they must enter the phone number otherwise it will not work
         if validate_phone_number(phone_number):
             return phone_number
         else:
@@ -124,7 +152,7 @@ def validate_phone_number(phone_number):
     # Define a simple pattern for a valid phone number (e.g., xxx-xxx-xxxx)
     pattern = re.compile(r'^\d{3}-\d{3}-\d{4}$')
     return pattern.match(phone_number)
-
+# validation of phone number
 
 def get_details(ll):
     # have to get it so that if they press g again after entering details it prints what has already been done and if
@@ -144,6 +172,7 @@ def get_details(ll):
     customer_details['Phone Number'] = user_number
 
     if users_option == "D":
+        # if the user chooses the dilivery option
         print("Getting delivery information")
         address_1 = get_string("Please enter address line 1: ")
         customer_details['Address Line One'] = address_1
@@ -151,17 +180,20 @@ def get_details(ll):
         customer_details['Address Line Two'] = address_2
         print("Delivery order")
     elif users_option == "P":
+        # if they choose pickup option
         print("Pickup order")
     else:
         print("ERROR - returning to main menu")
 
     print(customer_details)
     correct_info = get_option("If these details are correct enter C and if they are incorrect please enter I: ")
+    # checking if the information the user entered is correct and going form there based on their answer
     if correct_info == 'C':
         print("Info saved")
         print(customer_details)
     elif correct_info == 'I':
         print("Deleting all info please enter details again")
+        # clears all the info the user entered they can start again to enter the correct details
         customer_details['Delivery Type'] = ""
         customer_details['Name'] = ""
         customer_details['Phone Number'] = "'"
@@ -173,20 +205,25 @@ def get_details(ll):
 
 
 def confirm_order():
+    # function to confirm and execute the order
     print(customer_details)
     print(order_list)
     confirm = get_option("If this information is correct please enter C and if they are incorrect please enter I: --> ")
+    # once again asking the user if the info they have entered is correct
     if confirm == "C":
         print("Details confirmed")
-        print("gConfirmation for order needed. After confirmation cancellation is not an option")
+        print("Confirmation for order needed. After confirmation cancellation is not an option")
+        # informing the user that after they confirm there is no going back
         order_confirm = get_option("Please enter C to confirm or Q to go back to main menu: --> ")
         if order_confirm == "C":
             print("Confirmation accepted - you will be notified when the order is ready/on the way!")
             print("Thank you and enjoy your Sandwich(s)!!")
+            # having fully confirmed order
             # need to stop program here
             return order_confirm
         elif order_confirm == "Q":
             print("Returning to main menu")
+            # if the info is not correct, or they do not wish to confirm order
             return None
         else:
             print("ERROR - returning to main menu")
@@ -200,6 +237,7 @@ def confirm_order():
 
 
 def main():
+    # menu list for the user to choose from
     menu_list = [
         ["P", "Print menu"],
         ["R", "Review order"],
@@ -220,21 +258,30 @@ def main():
         user_choice = get_option("Please select an option: -> ")
         print("-" * 100)
         if user_choice == "P":
+            # shows sandwich menu
             reveiw_sandwich(sandwich_list)
         elif user_choice == "R":
+            # shows the order menu
             reveiw_order()
         elif user_choice == "A":
+            # adding an item/sandwich to the order list
             add_item_to_order()
         elif user_choice == "S":
+            # deleting and starting a new order
             start_new_order()
         elif user_choice == "E":
+            # editing order - either edit the quantity or delete an item, option to cancel this function incase mistake
             edit_order()
         elif user_choice == "G":
+            # getting the details (dilivery or pickup) and phone number and address and name
             get_details(customer_details)
         elif user_choice == "C":
+            # confirming all details (customer info and order list0 user can confirm or cancel funtion, but
+            # they would need to delete the info in different functions
             confirm_order()
             # how to stop program
         elif user_choice == "Q":
+            # ending program without confirming an order so everything becomes deleted
             run_program = False
         else:
             print("Unrecognised entry, please enter a presented letter")
@@ -242,6 +289,7 @@ def main():
 
 
 if __name__ == "__main__":
+    # list of different sandwiches with pricing
     sandwich_list = {
         "1": {"quantity": "-", "name": "Turkey and Brie sandwich", "price": 15.99},
         "2": {"quantity": "-", "name": "Thai beef sandwich", "price": 16.95},
@@ -255,6 +303,7 @@ if __name__ == "__main__":
     }
 
     order_list = []
+    # the list with the items the user has added to their order
 
     customer_details = {
         "Delivery Type": "",
@@ -263,5 +312,6 @@ if __name__ == "__main__":
         "Address Line One": "",
         "Address Line Two": ""
     }
+    # customer details list for the customer info function/ part of program
 
     main()
