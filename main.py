@@ -1,3 +1,6 @@
+import re
+
+
 def get_integer(m, lower, upper):
     # getting a number from the user - validation
     getting_integer = True
@@ -62,6 +65,9 @@ def reveiw_order():
             # prints the quality and the item of what they have chosen and the price of that
             # then it calculates the total price and prints it ot the user
             total_amount += item['total_price']
+        if customer_details['Delivery Type'] == "D":
+            total_amount += 3
+            print(" +$3 for delivery")
         print(f"Total: ${total_amount:.2f}")
 
 
@@ -121,7 +127,9 @@ def edit_order():
         for item in order_list:
             print(f"You have # {item['quantity']} of {item['item']}")
             new_value = get_integer("What would you like to change the quantity to: ", 0, 20)
+            item_price = item['total_price'] / item['quantity']
             order_list[choice_num]['quantity'] = new_value
+            order_list[choice_num]['total_price'] = new_value * item_price
             print("Order Successfully updated")
     elif choice == "D":
         print("Order updated")
@@ -131,11 +139,6 @@ def edit_order():
         print("Unrecognised entry, please try again")
         return None
 
-
-import re
-
-
-# for the phone number validation
 
 def get_phone_number(m):
     # Getting the phone number in customer details
@@ -152,15 +155,34 @@ def validate_phone_number(phone_number):
     # Define a simple pattern for a valid phone number (e.g., xxx-xxx-xxxx)
     pattern = re.compile(r'^\d{3}-\d{3}-\d{4}$')
     return pattern.match(phone_number)
+
+
 # validation of phone number
 
-def get_details(ll):
+def get_details(l):
     # have to get it so that if they press g again after entering details it prints what has already been done and if
     # they want to edit it also printing of the details after getting them
     # loop and deleting and checking everything
     # more validation
+    global customer_details
     print("Getting customer details")
-    print(customer_details)
+    if customer_details['Name'] != "":
+        print(customer_details)
+        # if customer has already entered their details in customer details
+        print("You have already entered your details - ")
+        again = get_option("Please enter A if you would like to start again and Q if these are correct: ")
+        if again == 'A':
+            print("Customer details have been reset")
+            # if they want to start again, re set the dictionary
+            customer_details = dict.fromkeys(customer_details, "")
+            return again
+        elif again == 'Q':
+            # if they want to go back to main menu so the info is correct
+            print("Customer details are staying the same - returning to main menu")
+            return None
+        else:
+            print("ERROR - retuning to main menu")
+            return None
 
     users_option = get_option("(P)ickup or (D)ilivery? ")
     customer_details['Delivery Type'] = users_option
@@ -194,20 +216,17 @@ def get_details(ll):
     elif correct_info == 'I':
         print("Deleting all info please enter details again")
         # clears all the info the user entered they can start again to enter the correct details
-        customer_details['Delivery Type'] = ""
-        customer_details['Name'] = ""
-        customer_details['Phone Number'] = "'"
-        customer_details['Address Line One'] = ""
-        customer_details['Address Line Two'] = ""
+        customer_details = dict.fromkeys(customer_details, "")
         print(customer_details)
     else:
         print("ERROR")
+        return None
 
 
 def confirm_order():
     # function to confirm and execute the order
     print(customer_details)
-    print(order_list)
+    print(reveiw_order())
     confirm = get_option("If this information is correct please enter C and if they are incorrect please enter I: --> ")
     # once again asking the user if the info they have entered is correct
     if confirm == "C":
@@ -221,6 +240,7 @@ def confirm_order():
             # having fully confirmed order
             # need to stop program here
             return order_confirm
+            # just goes back to main menu and user can quit the program from their or start their new order
         elif order_confirm == "Q":
             print("Returning to main menu")
             # if the info is not correct, or they do not wish to confirm order
@@ -237,6 +257,7 @@ def confirm_order():
 
 
 def main():
+    global customer_details
     # menu list for the user to choose from
     menu_list = [
         ["P", "Print menu"],
@@ -278,8 +299,13 @@ def main():
         elif user_choice == "C":
             # confirming all details (customer info and order list0 user can confirm or cancel funtion, but
             # they would need to delete the info in different functions
-            confirm_order()
-            # how to stop program
+            confirm = confirm_order()
+            if confirm == "C":
+                # clear the order list
+                order_list.clear()
+                # s et the dictionary back to empty state
+                customer_details = dict.fromkeys(customer_details, "")
+                print("Starting new order")
         elif user_choice == "Q":
             # ending program without confirming an order so everything becomes deleted
             run_program = False
