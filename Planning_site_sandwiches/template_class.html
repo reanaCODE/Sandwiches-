@@ -81,7 +81,20 @@
 <h4>Sprint Reveiw - reflection + where to next</h4>
 				<p>In Sprint Two, as stated in Sprint One reflection, I added an order list and an adding to order list function. Adding
 					the order list (order_list = []) was relatively simple, it was the printing of the order list and some parts of the adding
-					to order list function that I struggled with.
+					to order list function that I struggled with. If the user did not have anything in their order list I had to make sure that
+					they knew that, which was easy enough. However, when they did have some items in their order list I struggled a little bit with how
+					to print it out to them because I used dictionary. After I figured out how to do that, with some research and help from others, the
+					next problem I had to tackle was that of figuring out how to multiply the original price of a sandwich by the quantity the user
+					wished to add to their order. I figured out, with some help, that I had to create total_amount += item['total_price'] and then
+					slightly later in the function, I printed out:  print(f"Total: ${total_amount:.2f}"). Those were the struggles I faced with the
+					reveiw_order function. The adding_item to order function was slightly more challenging. I had to implement and get_key function,
+					which is different from the get_integer function  - I also included validation throughout Sprint Two - so that the user could easily
+					choose the number on the sandwich menu and add it to their order with the quantity. I had to append this to their order list - with
+					dictionary, which took some time to figure out. From here I will create a start new order function - this will delet everything that
+					the user had added to their order, so they can start again fresh. I will also implement and edit order function. This function
+					will allow the user/customer to either edit the quantity of an item in their order list or delete an item as a whole, I will also
+					give them the option to go back to main menu incase they made a mistake choosing that option in the main menu, or they changed
+					their mind.
 				</p>
 <h4>GitHub Push</h4>
 				<br>
