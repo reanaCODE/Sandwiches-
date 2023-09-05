@@ -18,7 +18,36 @@
 
 		<!-- Override CSS file - add your own CSS rules -->
 		<link rel="stylesheet" href="assets/css/styles.css">
+<style>
+	.main-box{
+				background-color: rgb(255,255,255);
+				border: 0px solid rgb(0,0,0);
+				position: relative;
+				max-width: 950px;
+				margin: auto;
+				align-content: center;
+				text-align: center;
+				image-orientation: center;
+				overflow: hidden;
+	 /*------- images ---------*/
+			.img-two-col{
+				width:50%;
+				display: block;
+				box-sizing: border-box;
+				float:left;
+			}
 
+			.img-three-col{
+				width:33.3%;
+				display: block;
+				box-sizing: border-box;
+				float:left;
+			}
+
+			.img{
+				text-align: center;
+			}
+</style>
 	</head>
 	<body>
 		<div class="container">
@@ -54,6 +83,7 @@
 <img class="img-responsive" src="assets/img/Sprint_1.JPG" alt="">
 				<br>
 <h4>Basic test of program: </h4>
+<img class="img-responsive" src="assets/img/sprint_1_test.JPG" alt="">
 				<br>
 <h4>Sprint Reveiw - reflection + where to next</h4>
 				<p> In Sprint One I had to apply my pressurises learning from the fruit-bowl practice project - creating a menu and
@@ -77,6 +107,7 @@
 <img class="img-responsive" src="assets/img/sprint_2.JPG" alt="">
 				<br>
 <h4>Basic test of program: </h4>
+<img class="img-responsive" src="assets/img/sprint_2_test.JPG" alt="">
 				<br>
 <h4>Sprint Reveiw - reflection + where to next</h4>
 				<p>In Sprint Two, as stated in Sprint One reflection, I added an order list and an adding to order list function. Adding
@@ -109,9 +140,22 @@
 <img class="img-responsive" src="assets/img/sprint_3.JPG" alt="">
 				<br>
 <h4>Basic test of program: </h4>
+<img class="img-responsive" src="assets/img/sprint_3_test_1.JPG" alt="">
+<img class="img-responsive" src="assets/img/sprint_3_test_2.JPG" alt="">
 				<br>
 <h4>Sprint Reveiw - reflection + where to next</h4>
-				<p></p>
+				<p> In this Sprint I implemented, as stated previously, a start_new_ order function (deletes current order so the user can
+					start a new one, and an edit_order function (user can edit quantity of an item in order or delete an item as a whole). I
+					first tackled the start_new_order as all I had to do was 'global order_list' and then set said order list back to;
+					order_list = []. It was with the edit order function that I struggled quite a bit. First I had to implement a get_index
+					function which would allow the user to see the index's of the order list and choose an index which they would like to edit,
+					this allowed for fewer errors in the code and a smaller chance that the user would enter the wrong thing. I also included
+					validation incase the user entered an integer that was not there or a letter/s. The thing that I had to work out was how to
+					structure this function and how to communicate everything clearly to the user incase they entered the wrong thing. Another
+					thing that I found difficult was changing the quantity, but form looking at my past codding I figured it out. From here, I am
+					going to add a function with which gets the customers details - name, phone number, delivery or pickup, and address.
+					I would also have to change the price in reveiw order if they changed the quantity, but I would come to that later on.
+				</p>
 <h4>GitHub Push</h4>
 				<br>
 <h4> Backlog Grooming - any updates to the project backlog? </h4>
@@ -125,15 +169,27 @@
 <img class="img-responsive" src="assets/img/sprint_4.JPG" alt="">
 				<br>
 <h4>Basic test of program: </h4>
+<img class="img-responsive" src="assets/img/sprint_4_test.JPG" alt="">
 				<br>
 <h4>Sprint Reveiw - reflection + where to next</h4>
-				<p> </p>
+				<p>In this sprint, Sprint 4, I implemented the get customer details function. This function involved getting the
+				   users choice as to weather they would like the order Pickup or Dilivery, getting the users name and phone number
+					and if they choose delivery than their address to which the meal would be delivered to. With this, I had to
+					create another list so that their information could be stored, I did this using dictionary, which proved to be
+					slightly more difficult. I also did validation of the phone number which required some research. At the end of
+					this function the program asks the user if the information they had entered was correct - if it was then they
+					would return to main menu and if it was not all the info in the list would be deleted. The deletion of the
+					info was what I worked more on in sprint 5 as the use of dictionary require more thought to this particular
+					action. The next moves from sprint four would be to add a confirm order function and sort out the small
+					things. This included if the user had already entered their customer details, adding a $3 dilivery fee, updating the
+					total price if the user had edited their order, and deleting the added info in the customer details list.
+				</p>
 <h4>GitHub Push</h4>
 				<br>
 <h4> Backlog Grooming - any updates to the project backlog? </h4>
 <hr>
     <h1>Sprint 5</h1>
-<p>Aim: Create a confirming order function and validation of all</p>
+<p>Aim: Create a confirming order function and validation and double-checking of all</p>
 <h4>Rough program plan: </h4>
 <img class="img-responsive" src="assets/img/Rough_5.JPG" alt="">
 <br>
@@ -141,9 +197,22 @@
 <img class="img-responsive" src="assets/img/sprint_5.JPG" alt="">
 				<br>
 <h4>Basic test of program: </h4>
+<img class="img-responsive" src="assets/img/sprint_5_test.JPG" alt="">
 				<br>
 <h4>Sprint Reveiw - reflection + where to next</h4>
-				<p> </p>
+				<p> In Sprint Five, as stated above, I added a confirm order function and tackled the small parts of the code that
+					still needed fixing. For the confirmation of order details the program prints out the customer details they have entered
+					and their order list (reveiw_order function). The program then asks if this information is correct and if it is not the
+					user will be sent back to main menu (nothing will be deleted or changed) and if it is correct, then the program will let
+					the user know that once they confirm then they can not go back, from this they can either cancel and be sent back to main menu
+					(once again nothing will be deleted or changed) and if they enter (C) than the order will be complete and a new order will start.
+					Once they confirm order everything had to be deleted in order-list (which was easy) and in the customer details, which after some
+					research nd some help proved to be as follows: customer_details = dict.fromkeys(customer_details, ""). I added this code into
+					the places where I needed to reset the customer details list i.e. if the user entered wrong details and wishes to re-enter them.
+					After this function was completed I just had to sort out the small parts with some help, they were as stated above (in Sprint 4):
+					if the user had already entered their customer details, adding a $3 dilivery fee, updating the total price if the user had edited
+					their order, and deleting the added info in the customer details list.
+				</p>
 <h4>GitHub Push</h4>
 				<br>
 <h4> Backlog Grooming - any updates to the project backlog? </h4>
